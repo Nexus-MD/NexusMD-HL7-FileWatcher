@@ -54,7 +54,7 @@ namespace FileWatcher_WindowsService
         private void ReadConfig()
         {
             string log = "Read Config";
-            string filePath = "c:\\fileWatcherConfig.json";
+            string filePath = "c:\\NexusMDHL7WatcherConfig.json";
 
             try
             {
@@ -74,7 +74,7 @@ namespace FileWatcher_WindowsService
                     log += $"\nConfig dose not exist. new config file created at {filePath}.";
                     configJson = new ConfigJsonModel()
                     {
-                        PathToWatch = "C:\\AmirTest",
+                        PathToWatch = "C:\\HL7Messages",
                         KeepOriginalFile = true
                     };
                     using (StreamWriter writer = new StreamWriter(filePath, true))
@@ -92,7 +92,7 @@ namespace FileWatcher_WindowsService
                 log += $"\n\nExeption : {ex.Message}";
                 configJson = new ConfigJsonModel()
                 {
-                    PathToWatch = "C:\\AmirTest",
+                    PathToWatch = "C:\\HL7Messages",
                     KeepOriginalFile = true
                 };
             }
@@ -127,14 +127,7 @@ namespace FileWatcher_WindowsService
                     editedFilePath = e.FullPath;
                 }
 
-                using (StreamWriter writer = new StreamWriter(editedFilePath, true))
-                {
-                    {
-                        string output = input.Replace("MSH|^~\\&|MIK-AIG^MIK-AIG^GUID||", "MSH|^~\\&|MIK-AIG^RALEIGHORTHO^GUID||");
-                        writer.Write(output);
-                    }
-                    writer.Close();
-                }
+                
                 log += $"\nReplace Success and saved in {editedFilePath}"; 
                 #endregion
 
